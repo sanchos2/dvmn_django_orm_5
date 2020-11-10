@@ -1,5 +1,18 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+
+
+class Claim(models.Model):
+    """Модель жалобы."""
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Кто жаловался')
+    flat = models.ForeignKey('Flat', on_delete=models.CASCADE, verbose_name='Квартира на которую пожаловались')
+    text = models.TextField('Текст жалобы')
+
+    def __str__(self):
+        """Вывод в админку."""
+        return f'{self.owner} {self.flat}'
 
 
 class Flat(models.Model):
@@ -29,6 +42,7 @@ class Flat(models.Model):
     has_balcony = models.NullBooleanField('Наличие балкона', db_index=True)
     active = models.BooleanField('Активно-ли объявление', db_index=True)
     construction_year = models.IntegerField('Год постройки здания', null=True, blank=True, db_index=True)
+    like = models.ManyToManyField(User, symmetrical=False, blank=True, verbose_name='Кто лайкнул')
 
     def __str__(self):
         """Вывод в админку."""
