@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Claim(models.Model):
@@ -19,8 +20,9 @@ class Flat(models.Model):
     """Модель квартиры."""
 
     owner = models.CharField('ФИО владельца', max_length=200)  # noqa: WPS432
+    owner_pure_phone = PhoneNumberField('Нормализованный номер владельца', blank=True)
     owners_phonenumber = models.CharField('Номер владельца', max_length=20)  # noqa: WPS432
-    new_building = models.NullBooleanField()
+    new_building = models.NullBooleanField('Новостройка')
     created_at = models.DateTimeField('Когда создано объявление', default=timezone.now, db_index=True)
 
     description = models.TextField('Текст объявления', blank=True)
