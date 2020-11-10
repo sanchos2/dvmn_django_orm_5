@@ -1,21 +1,22 @@
 from django.shortcuts import render
 
-
 from property.models import Flat
 
 
-def format_price(value):
+def format_price(price):
+    """Преобразование цены в int."""
     try:
-        return int(value)
-    except (TypeError, ValueError) as err:
+        return int(price)
+    except (TypeError, ValueError):
         return None
 
 
-def show_flats(request):
+def show_flats(request):  # noqa: WPS210
+    """Рендеринг всех квартир."""
     town = request.GET.get('town')
     min_price = format_price(request.GET.get('min_price'))
     max_price = format_price(request.GET.get('max_price'))
-    new_building = request.GET.get('new_building') == "1"
+    new_building = request.GET.get('new_building') == '1'
 
     flats = Flat.objects.all()
     if town:
@@ -34,4 +35,5 @@ def show_flats(request):
         'active_town': town,
         'max_price': max_price,
         'min_price': min_price,
-        'new_building': new_building})
+        'new_building': new_building,
+    })
