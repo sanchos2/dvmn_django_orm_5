@@ -27,6 +27,8 @@ def show_flats(request):  # noqa: WPS210
         flats = flats.filter(price__lt=max_price)
     if min_price or max_price:
         flats = flats.exclude(price=None)
+    if new_building:
+        flats = flats.filter(new_building=True)
 
     towns = Flat.objects.values_list('town', flat=True).distinct().order_by('town')
     return render(request, 'flats_list.html', {
