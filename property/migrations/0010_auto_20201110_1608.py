@@ -14,18 +14,18 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='owner',
             name='owner',
-            field=models.CharField(default='', max_length=200, verbose_name='ФИО владельца'),
+            field=models.CharField(default='', max_length=200, db_index=True, verbose_name='ФИО владельца'),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='owner',
             name='owner_pure_phone',
-            field=phonenumber_field.modelfields.PhoneNumberField(blank=True, max_length=128, region=None, verbose_name='Нормализованный номер владельца'),
+            field=phonenumber_field.modelfields.PhoneNumberField(blank=True, max_length=128, region=None, db_index=True, verbose_name='Нормализованный номер владельца'),
         ),
         migrations.AddField(
             model_name='owner',
             name='owners_phonenumber',
-            field=models.CharField(default='default', max_length=20, verbose_name='Номер владельца'),
+            field=models.CharField(default='default', max_length=20, db_index=True, verbose_name='Номер владельца'),
             preserve_default=False,
         ),
     ]

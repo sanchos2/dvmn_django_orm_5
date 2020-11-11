@@ -14,6 +14,18 @@ def owner_copy(apps, schema_editor):
         )
 
 
+def flat_owner_relation(apps, schema_editor):
+    Flat = apps.get_model('property', 'Flat')
+    Owner = apps.get_model('property', 'Owner')
+    for flat in Flat.objects.all():
+        owner, created = Owner.objects.get_or_create(
+            owner=flat.owner,
+            owner_pure_phone=flat.owner_pure_phone,
+            owners_phonenumber=flat.owners_phonenumber,
+        )
+        flat.owners.set([owner])
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -22,4 +34,17 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(owner_copy),
+        migrations.RunPython(flat_owner_relation),
+        migrations.RemoveField(
+            model_name='flat',
+            name='owner',
+        ),
+        migrations.RemoveField(
+            model_name='flat',
+            name='owner_pure_phone',
+        ),
+        migrations.RemoveField(
+            model_name='flat',
+            name='owners_phonenumber',
+        ),
     ]
