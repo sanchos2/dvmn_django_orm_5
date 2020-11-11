@@ -19,6 +19,7 @@ class FlatAdmin(admin.ModelAdmin):
     list_editable = ['new_building']
     list_filter = ['new_building', 'rooms_number', 'has_balcony']
     raw_id_fields = ('like', )
+    list_per_page = 20
 
 
 class OwnerAdmin(admin.ModelAdmin):
@@ -27,6 +28,7 @@ class OwnerAdmin(admin.ModelAdmin):
     list_display = ['owner', 'owner_pure_phone']
     raw_id_fields = ('flat_owner', )
     search_fields = ['owner', 'owner_pure_phone']
+    list_per_page = 20
 
 
 admin.site.register(Claim, ClaimAdmin)
