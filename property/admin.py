@@ -13,7 +13,7 @@ class ClaimAdmin(admin.ModelAdmin):
 class FlatAdmin(admin.ModelAdmin):
     """Отображение квартир в админке."""
 
-    search_fields = ['owner', 'town', 'address', 'pk']
+    search_fields = ['town', 'address', 'pk']
     readonly_fields = ['created_at']
     list_display = ['address', 'price', 'new_building', 'construction_year', 'town']
     list_editable = ['new_building']
@@ -24,7 +24,9 @@ class FlatAdmin(admin.ModelAdmin):
 class OwnerAdmin(admin.ModelAdmin):
     """Отображение собственников квартиры."""
 
+    list_display = ['owner', 'owner_pure_phone']
     raw_id_fields = ('flat_owner', )
+    search_fields = ['owner', 'owner_pure_phone']
 
 
 admin.site.register(Claim, ClaimAdmin)
