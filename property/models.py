@@ -19,9 +19,6 @@ class Claim(models.Model):
 class Flat(models.Model):
     """Модель квартиры."""
 
-    owner = models.CharField('ФИО владельца', max_length=200)  # noqa: WPS432
-    owner_pure_phone = PhoneNumberField('Нормализованный номер владельца', blank=True)
-    owners_phonenumber = models.CharField('Номер владельца', max_length=20)  # noqa: WPS432
     new_building = models.NullBooleanField('Новостройка')
     created_at = models.DateTimeField('Когда создано объявление', default=timezone.now, db_index=True)
 
@@ -49,3 +46,16 @@ class Flat(models.Model):
     def __str__(self):
         """Вывод в админку."""
         return f'{self.town}, {self.address} ({self.price}р.)'
+
+
+class Owner(models.Model):
+    """Модель собственников кваритры."""
+
+    owner = models.CharField('ФИО владельца', max_length=200, db_index=True)  # noqa: WPS432
+    owner_pure_phone = PhoneNumberField('Нормализованный номер владельца', blank=True, db_index=True)
+    owners_phonenumber = models.CharField('Номер владельца', max_length=20, db_index=True)  # noqa: WPS432
+    flat_owner = models.ManyToManyField('Flat', related_name='owners')
+
+    def __str__(self):
+        """Вывод в админку."""
+        return self.owner
