@@ -10,6 +10,11 @@ class ClaimAdmin(admin.ModelAdmin):
     list_display = ['owner', 'flat', 'text']
 
 
+class OwnerInline(admin.TabularInline):
+    model = Owner.flat_owner.through
+    extra = 0
+
+
 class FlatAdmin(admin.ModelAdmin):
     """Отображение квартир в админке."""
 
@@ -20,6 +25,8 @@ class FlatAdmin(admin.ModelAdmin):
     list_filter = ['new_building', 'rooms_number', 'has_balcony']
     raw_id_fields = ('like', )
     list_per_page = 20
+    # TODO очень медленное открытие объекта
+    # inlines = [OwnerInline]
 
 
 class OwnerAdmin(admin.ModelAdmin):
@@ -29,6 +36,9 @@ class OwnerAdmin(admin.ModelAdmin):
     raw_id_fields = ('flat_owner', )
     search_fields = ['owner', 'owner_pure_phone']
     list_per_page = 20
+    # TODO очень медленное открытие объекта
+    # inlines = [OwnerInline]
+    # exclude = ('flat_owner', )
 
 
 admin.site.register(Claim, ClaimAdmin)

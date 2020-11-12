@@ -53,7 +53,6 @@ class Owner(models.Model):
 
     owner = models.CharField('ФИО владельца', max_length=200, db_index=True)  # noqa: WPS432
     owner_pure_phone = PhoneNumberField('Нормализованный номер владельца', blank=True, db_index=True)
-    owners_phonenumber = models.CharField('Номер владельца', max_length=20, db_index=True)  # noqa: WPS432
     flat_owner = models.ManyToManyField('Flat', related_name='owners')
 
     def __str__(self):
