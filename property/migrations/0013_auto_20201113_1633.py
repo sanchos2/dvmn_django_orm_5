@@ -22,4 +22,15 @@ class Migration(migrations.Migration):
             name='like',
             field=models.ManyToManyField(blank=True, related_name='flats', to=settings.AUTH_USER_MODEL, verbose_name='Кто лайкнул'),
         ),
+        migrations.RenameField(
+            model_name='claim',
+            old_name='owner',
+            new_name='client',
+        ),
+        migrations.AlterField(
+            model_name='claim',
+            name='client',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='claims',
+                                    to=settings.AUTH_USER_MODEL, verbose_name='Кто жаловался'),
+        ),
     ]

@@ -7,7 +7,12 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Claim(models.Model):
     """Модель жалобы."""
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Кто жаловался')
+    client = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='Кто жаловался',
+        related_name='claims'
+    )
     flat = models.ForeignKey(
         'Flat',
         on_delete=models.CASCADE,

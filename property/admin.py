@@ -6,8 +6,8 @@ from property.models import Claim, Flat, Owner
 class ClaimAdmin(admin.ModelAdmin):
     """Отображение жалобы в админке."""
 
-    raw_id_fields = ('owner', 'flat')
-    list_display = ['owner', 'flat', 'text']
+    raw_id_fields = ('client', 'flat')
+    list_display = ['client', 'flat', 'text']
 
 
 class OwnerInline(admin.TabularInline):
