@@ -8,7 +8,12 @@ class Claim(models.Model):
     """Модель жалобы."""
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Кто жаловался')
-    flat = models.ForeignKey('Flat', on_delete=models.CASCADE, verbose_name='Квартира на которую пожаловались')
+    flat = models.ForeignKey(
+        'Flat',
+        on_delete=models.CASCADE,
+        verbose_name='Квартира на которую пожаловались',
+        related_name='claims'
+    )
     text = models.TextField('Текст жалобы')
 
     def __str__(self):
@@ -41,7 +46,13 @@ class Flat(models.Model):
     has_balcony = models.NullBooleanField('Наличие балкона', db_index=True)
     active = models.BooleanField('Активно-ли объявление', db_index=True)
     construction_year = models.IntegerField('Год постройки здания', null=True, blank=True, db_index=True)
-    like = models.ManyToManyField(User, symmetrical=False, blank=True, verbose_name='Кто лайкнул')
+    like = models.ManyToManyField(
+        User,
+        symmetrical=False,
+        blank=True,
+        verbose_name='Кто лайкнул',
+        related_name='flats'
+    )
 
     def __str__(self):
         """Вывод в админку."""
